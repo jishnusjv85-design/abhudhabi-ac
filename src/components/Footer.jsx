@@ -33,7 +33,7 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#services" className="hover:text-brand-300">
-                  District Cooling &amp; ETS Valves
+                  District Cooling & ETS Valves
                 </a>
               </li>
               <li>
@@ -43,11 +43,12 @@ const Footer = () => {
               </li>
               <li>
                 <a href="#services" className="hover:text-brand-300">
-                  Cleanroom AHU &amp; PIR Ducts
-                </li>
-                <li>
+                  Cleanroom AHU & PIR Ducts
+                </a>
+              </li>
+              <li>
                 <a href="#services" className="hover:text-brand-300">
-                  Marine &amp; Offshore HVAC
+                  Marine & Offshore HVAC
                 </a>
               </li>
             </ul>
@@ -57,11 +58,11 @@ const Footer = () => {
           <div>
             <h4 className="text-white font-semibold mb-3">Coverage Areas</h4>
             <ul className="space-y-2">
-              <li>Musaffah Industrial &amp; ICAD I/II/III</li>
-              <li>Al Reem Island &amp; Maryah Island</li>
-              <li>Yas Island &amp; Saadiyat Island</li>
-              <li>Khalifa City &amp; Mohammed Bin Zayed</li>
-              <li>Al Ain &amp; Western Region (Al Dhafra)</li>
+              <li>Musaffah Industrial & ICAD I/II/III</li>
+              <li>Al Reem Island & Maryah Island</li>
+              <li>Yas Island & Saadiyat Island</li>
+              <li>Khalifa City & Mohammed Bin Zayed</li>
+              <li>Al Ain & Western Region (Al Dhafra)</li>
             </ul>
           </div>
 
