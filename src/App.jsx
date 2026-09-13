@@ -7,6 +7,7 @@ import Hero from './components/Hero'
 import StatsBar from './components/StatsBar'
 import Services from './components/Services'
 import Calculator from './components/Calculator'
+import EnhancedCalculator from './components/EnhancedCalculator'
 import Emergency from './components/Emergency'
 import Projects from './components/Projects'
 import AMC from './components/AMC'
@@ -50,7 +51,7 @@ function App() {
       <Hero setQuoteModalOpen={setQuoteModalOpen} />
       <StatsBar />
       <Services setQuoteModalOpen={setQuoteModalOpen} />
-      <Calculator setQuoteModalOpen={setQuoteModalOpen} />
+      <EnhancedCalculator setQuoteModalOpen={setQuoteModalOpen} />
       <Emergency />
       <Projects />
       <AMC setQuoteModalOpen={setQuoteModalOpen} />
