@@ -71,6 +71,13 @@ const areas = [
   'Across Kozhikode District',
 ]
 
+// Set VITE_BUSINESS_WHATSAPP to the verified business number in international
+// format, digits only (for example, 919876543210). No number is guessed here.
+const businessWhatsApp = (import.meta.env.VITE_BUSINESS_WHATSAPP || '').replace(/\D/g, '')
+const validWhatsApp = /^[1-9]\d{9,14}$/.test(businessWhatsApp)
+// Add only business-approved, genuine image paths placed in public/work/.
+const workPhotos = []
+
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
@@ -83,7 +90,12 @@ function App() {
   }, [])
 
   const openWhatsApp = () => {
-    document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })
+    if (validWhatsApp) {
+      const text = encodeURIComponent('Hi AR Cooling Solutions, I need AC service in Kozhikode.')
+      window.open(`https://wa.me/${businessWhatsApp}?text=${text}`, '_blank', 'noopener,noreferrer')
+    } else {
+      document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })
+    }
   }
 
   const submitBooking = (event) => {
@@ -111,6 +123,11 @@ function App() {
     } catch {
       document.getElementById('request-text')?.select()
     }
+  }
+
+  const sendRequest = () => {
+    if (!validWhatsApp || !request) return
+    window.open(`https://wa.me/${businessWhatsApp}?text=${encodeURIComponent(request)}`, '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -199,6 +216,8 @@ function App() {
           </div>
         </section>
 
+        {workPhotos.length > 0 && <section className="py-20 sm:py-24" aria-labelledby="work-title"><div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8"><div className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Our work</div><h2 id="work-title" className="mt-3 text-4xl font-black tracking-tight text-slate-950">Real service, real results.</h2><div className="mt-9 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{workPhotos.map(({ src, alt, caption }) => <figure key={src} className="overflow-hidden rounded-3xl border border-blue-100 bg-white shadow-sm"><img src={src} alt={alt} loading="lazy" className="aspect-[4/3] w-full object-cover" /><figcaption className="p-5 text-sm font-bold text-slate-700">{caption}</figcaption></figure>)}</div></div></section>}
+
         <section className="pb-8">
           <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-3 sm:px-6 lg:px-8">
             {[
@@ -269,6 +288,8 @@ function App() {
           </div>
         </section>
 
+        <section id="pricing" className="bg-blue-950 py-16 text-white sm:py-20"><div className="mx-auto grid max-w-7xl gap-8 px-4 sm:px-6 lg:grid-cols-[.85fr_1.15fr] lg:items-center lg:px-8"><div><div className="text-xs font-black uppercase tracking-[0.2em] text-sky-300">Before you book</div><h2 className="mt-3 text-3xl font-black tracking-tight sm:text-4xl">Know the cost before work starts.</h2><p className="mt-4 leading-7 text-blue-100">Pricing depends on your AC and the work required. Ask the team to confirm the visit or inspection charge before scheduling.</p></div><div className="grid gap-4 sm:grid-cols-3">{[['01', 'Describe the issue', 'Share the AC details and your area.'], ['02', 'Confirm visit charge', 'Ask about the charge and availability before booking.'], ['03', 'Approve the work', 'Request a repair or service estimate after inspection.']].map(([number, title, detail]) => <div key={number} className="rounded-2xl border border-white/15 bg-white/10 p-5"><span className="text-sm font-black text-sky-300">{number}</span><strong className="mt-5 block text-lg">{title}</strong><p className="mt-2 text-sm leading-6 text-blue-100">{detail}</p></div>)}</div></div></section>
+
         <section id="book" className="bg-gradient-to-br from-sky-50 via-white to-blue-50 py-20 sm:py-24">
           <div className="mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:grid-cols-[.82fr_1.18fr] lg:px-8">
             <div>
@@ -296,7 +317,7 @@ function App() {
               </div>
               <button className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-700 px-5 py-4 font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-800" type="submit">Prepare Service Request <ArrowRight size={18} /></button>
               <p className="mt-3 text-xs leading-5 text-slate-500">Preparing this request does not send it to the business.</p>
-              {submitted && <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-950" role="status"><strong className="block text-base">Your request is ready</strong><p className="mt-1">Copy the message below and send it through a verified AR Cooling Solutions contact channel.</p><textarea id="request-text" readOnly value={request} rows="9" aria-label="Prepared service request" className="mt-3 w-full rounded-lg border border-blue-200 bg-white p-3 text-sm leading-6" /><button type="button" onClick={copyRequest} className="mt-2 rounded-lg bg-blue-800 px-4 py-2 font-bold text-white hover:bg-blue-950">{copied ? 'Copied!' : 'Copy request'}</button></div>}
+              {submitted && <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-950" role="status"><strong className="block text-base">Your request is ready</strong><p className="mt-1">{validWhatsApp ? 'Review the details and open WhatsApp to send your message.' : 'Copy the message below and send it through a verified AR Cooling Solutions contact channel.'}</p><textarea id="request-text" readOnly value={request} rows="9" aria-label="Prepared service request" className="mt-3 w-full rounded-lg border border-blue-200 bg-white p-3 text-sm leading-6" /><div className="mt-2 flex flex-wrap gap-2"><button type="button" onClick={copyRequest} className="rounded-lg bg-blue-800 px-4 py-2 font-bold text-white hover:bg-blue-950">{copied ? 'Copied!' : 'Copy request'}</button>{validWhatsApp && <button type="button" onClick={sendRequest} className="rounded-lg bg-emerald-700 px-4 py-2 font-bold text-white hover:bg-emerald-800">Open WhatsApp</button>}</div></div>}
             </form>
           </div>
         </section>
@@ -312,8 +333,8 @@ function App() {
         </div>
       </footer>
 
-      <button onClick={openWhatsApp} className="fixed bottom-5 right-5 z-[70] flex h-16 w-16 items-center justify-center rounded-full bg-blue-700 text-white shadow-2xl shadow-blue-300 transition hover:-translate-y-1 hover:scale-105 sm:h-auto sm:w-auto sm:gap-2 sm:px-5 sm:py-4" aria-label="Go to service request" title="Go to service request">
-        <MessageCircle size={28} /><span className="hidden font-extrabold sm:inline">Request service</span>
+      <button onClick={openWhatsApp} className="fixed bottom-5 right-5 z-[70] flex h-16 w-16 items-center justify-center rounded-full bg-blue-700 text-white shadow-2xl shadow-blue-300 transition hover:-translate-y-1 hover:scale-105 sm:h-auto sm:w-auto sm:gap-2 sm:px-5 sm:py-4" aria-label={validWhatsApp ? 'Chat on WhatsApp' : 'Go to service request'} title={validWhatsApp ? 'Chat on WhatsApp' : 'Go to service request'}>
+        <MessageCircle size={28} /><span className="hidden font-extrabold sm:inline">{validWhatsApp ? 'WhatsApp' : 'Request service'}</span>
       </button>
     </div>
   )
