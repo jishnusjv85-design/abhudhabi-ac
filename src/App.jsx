@@ -74,24 +74,48 @@ const areas = [
 function App() {
   const [menuOpen, setMenuOpen] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [request, setRequest] = useState('')
+  const [copied, setCopied] = useState(false)
+  const [showModels, setShowModels] = useState(false)
 
   useEffect(() => {
     document.title = 'AR Cooling Solutions | AC Service & Cleaning in Kozhikode'
   }, [])
 
   const openWhatsApp = () => {
-    const text = encodeURIComponent('Hi AR Cooling Solutions, I need AC service in Kozhikode.')
-    window.open(`https://wa.me/?text=${text}`, '_blank', 'noopener,noreferrer')
+    document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const submitBooking = (event) => {
     event.preventDefault()
+    const values = new FormData(event.currentTarget)
+    setRequest([
+      'AC service request — AR Cooling Solutions',
+      `Name: ${values.get('name')}`,
+      `Phone: ${values.get('phone')}`,
+      `Service: ${values.get('service')}`,
+      `AC type: ${values.get('type') || 'Not specified'}`,
+      `Brand: ${values.get('brand') || 'Not specified'}`,
+      `Model: ${values.get('model') || 'Not specified'}`,
+      `Area: ${values.get('area')}`,
+      `Issue: ${values.get('notes') || 'Not specified'}`,
+    ].join('\n'))
+    setCopied(false)
     setSubmitted(true)
+  }
+
+  const copyRequest = async () => {
+    try {
+      await navigator.clipboard.writeText(request)
+      setCopied(true)
+    } catch {
+      document.getElementById('request-text')?.select()
+    }
   }
 
   return (
     <div className="min-h-screen bg-[#f7fcff] text-slate-900 selection:bg-blue-200">
-      <header className="sticky top-0 z-50 border-b border-blue-100 bg-white/90 backdrop-blur-xl">
+      <header className="site-header sticky top-0 z-50 border-b border-blue-100 bg-white/95 backdrop-blur-xl">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
           <a href="#home" className="flex items-center gap-3">
             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-700 to-sky-400 text-white shadow-lg shadow-blue-200">
@@ -110,7 +134,7 @@ function App() {
             <a href="#book" className="rounded-full bg-blue-700 px-5 py-3 text-white shadow-lg shadow-blue-200 hover:bg-blue-800">Book Service</a>
           </nav>
 
-          <button className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-100 bg-white text-blue-900 md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu">
+          <button className="flex h-11 w-11 items-center justify-center rounded-xl border border-blue-100 bg-white text-blue-900 md:hidden" onClick={() => setMenuOpen(!menuOpen)} aria-label={menuOpen ? 'Close menu' : 'Open menu'} aria-expanded={menuOpen}>
             {menuOpen ? <X size={22} /> : <Menu size={22} />}
           </button>
         </div>
@@ -127,16 +151,16 @@ function App() {
       </header>
 
       <main>
-        <section id="home" className="relative overflow-hidden bg-ice-frost py-16 sm:py-24">
+        <section id="home" className="hero-section relative overflow-hidden bg-ice-frost py-16 sm:py-24">
           <div className="absolute -left-24 top-16 h-80 w-80 rounded-full bg-sky-200/50 blur-3xl" />
           <div className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-blue-200/40 blur-3xl" />
           <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-[1.08fr_.92fr] lg:px-8">
             <div>
               <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-white/90 px-4 py-2 text-xs font-extrabold text-blue-800 shadow-sm">
-                <MapPin size={15} /> കോഴിക്കോട് മുഴുവൻ AC സർവീസ് & ക്ലീനിംഗ്
+                <MapPin size={15} /> AC care across Kozhikode
               </div>
               <h1 className="max-w-3xl text-5xl font-black leading-[0.96] tracking-[-0.055em] text-slate-950 sm:text-6xl lg:text-7xl">
-                Cool comfort for <span className="block bg-gradient-to-r from-blue-700 via-sky-500 to-cyan-300 bg-clip-text text-transparent">Kozhikode homes.</span>
+                Better cooling. <span className="block bg-gradient-to-r from-blue-700 via-sky-500 to-cyan-300 bg-clip-text text-transparent">Better everyday.</span>
               </h1>
               <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
                 <strong className="text-slate-900">AR Cooling Solutions</strong> provides AC service, repair and professional cleaning for all types, brands and models of air conditioners across Kozhikode — for homes, apartments, shops and offices.
@@ -145,8 +169,8 @@ function App() {
                 <a href="#book" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-blue-700 px-6 py-4 font-extrabold text-white shadow-xl shadow-blue-200 hover:bg-blue-800">
                   <CalendarCheck size={19} /> Book AC Service
                 </a>
-                <a href="#models" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-100 bg-white px-6 py-4 font-extrabold text-blue-950 shadow-sm hover:bg-blue-50">
-                  <Snowflake size={19} /> View AC Models
+                <a href="#services" className="inline-flex items-center justify-center gap-2 rounded-2xl border border-blue-100 bg-white px-6 py-4 font-extrabold text-blue-950 shadow-sm hover:bg-blue-50">
+                  <Snowflake size={19} /> Explore Services
                 </a>
               </div>
               <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-sm font-bold text-slate-600">
@@ -156,7 +180,7 @@ function App() {
               </div>
             </div>
 
-            <div className="relative min-h-[500px] overflow-hidden rounded-[2.3rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 p-7 shadow-2xl shadow-blue-100">
+            <div className="hero-art relative min-h-[500px] overflow-hidden rounded-[2.3rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 p-7 shadow-2xl shadow-blue-100" role="img" aria-label="Illustration of a cooling air conditioner">
               <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-gradient-to-br from-sky-300 to-blue-700" />
               <Snowflake className="absolute right-14 top-20 text-white/90" size={34} />
               <Snowflake className="absolute right-28 top-14 text-white/70" size={19} />
@@ -205,10 +229,11 @@ function App() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl"><div className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">All AC models & systems</div><h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-slate-950 sm:text-5xl">All common AC types serviced and cleaned.</h2><p className="mt-4 leading-7 text-slate-600">Residential and commercial air-conditioning systems commonly used across Kerala are covered.</p></div>
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-              {acTypes.map((name, index) => (
+              {acTypes.slice(0, showModels ? acTypes.length : 8).map((name) => (
                 <div key={name} className="flex min-h-28 flex-col justify-between rounded-2xl border border-blue-100 bg-white p-5 shadow-sm"><Snowflake size={20} className="text-blue-600" /><strong className="mt-5 text-sm text-blue-950">{name}</strong></div>
               ))}
             </div>
+            <button type="button" className="mt-6 rounded-full border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-800 hover:bg-blue-50" onClick={() => setShowModels(!showModels)} aria-expanded={showModels}>{showModels ? 'Show fewer AC types' : 'View all AC types'}</button>
             <div className="mt-10 rounded-[1.8rem] border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50 sm:p-8">
               <h3 className="text-2xl font-black text-blue-950">Major AC brands & models we service</h3>
               <p className="mt-2 text-sm leading-7 text-slate-600">Service support for current and older models from major brands. If your brand or model is not listed, send us the model details.</p>
@@ -249,7 +274,7 @@ function App() {
             <div>
               <div className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Book a service</div>
               <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-slate-950 sm:text-5xl">Tell us what your AC needs.</h2>
-              <p className="mt-5 leading-7 text-slate-600">Share the service type, AC model and your Kozhikode location. The form is ready for direct WhatsApp integration once the business WhatsApp number is confirmed.</p>
+              <p className="mt-5 leading-7 text-slate-600">Share the service type, AC model and your Kozhikode location. Prepare a message you can copy and send through a verified contact channel.</p>
               <div className="mt-7 grid gap-3 text-sm font-bold text-slate-600">
                 <span className="flex items-center gap-2"><Home size={17} className="text-blue-600" /> Home & apartment service</span>
                 <span className="flex items-center gap-2"><Store size={17} className="text-blue-600" /> Shops & commercial spaces</span>
@@ -260,17 +285,18 @@ function App() {
 
             <form onSubmit={submitBooking} className="rounded-[2rem] border border-blue-100 bg-white p-6 shadow-2xl shadow-blue-100 sm:p-8">
               <div className="grid gap-4 sm:grid-cols-2">
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Name<input required className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Your name" /></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Phone<input required type="tel" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Your mobile number" /></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Service<select required className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400"><option value="">Choose service</option><option>General AC Service</option><option>Deep AC Cleaning</option><option>AC Repair</option><option>Cooling Issue</option><option>Water Leakage</option><option>Gas / Refrigerant Check</option><option>Installation / Re-installation</option></select></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">AC Type<select className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400">{acTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Brand<input className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Example: Daikin / LG / Voltas" /></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Model Number<input className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="If available" /></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600 sm:col-span-2">Area in Kozhikode<input required className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Example: Kallai / Feroke / Kunnamangalam" /></label>
-                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600 sm:col-span-2">Problem / Notes<textarea rows="4" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Tell us what is happening with the AC" /></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Name<input name="name" required autoComplete="name" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Your name" /></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Phone<input name="phone" required type="tel" minLength="7" autoComplete="tel" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Your mobile number" /></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Service<select name="service" required className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400"><option value="">Choose service</option><option>General AC Service</option><option>Deep AC Cleaning</option><option>AC Repair</option><option>Cooling Issue</option><option>Water Leakage</option><option>Gas / Refrigerant Check</option><option>Installation / Re-installation</option></select></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">AC Type<select name="type" defaultValue="" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400"><option value="">Select if known</option>{acTypes.map((type) => <option key={type}>{type}</option>)}</select></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Brand<input name="brand" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Example: Daikin / LG / Voltas" /></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600">Model Number<input name="model" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="If available" /></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600 sm:col-span-2">Area in Kozhikode<input name="area" required className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Example: Kallai / Feroke / Kunnamangalam" /></label>
+                <label className="grid gap-1.5 text-xs font-extrabold text-slate-600 sm:col-span-2">Problem / Notes<textarea name="notes" rows="4" className="rounded-xl border border-blue-100 bg-[#fbfeff] px-4 py-3 text-sm outline-none focus:border-blue-400" placeholder="Tell us what is happening with the AC" /></label>
               </div>
               <button className="mt-5 inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-blue-700 px-5 py-4 font-extrabold text-white shadow-lg shadow-blue-200 hover:bg-blue-800" type="submit">Prepare Service Request <ArrowRight size={18} /></button>
-              {submitted && <div className="mt-4 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-sm font-bold text-emerald-800">Service request prepared. Add the confirmed AR Cooling Solutions WhatsApp number to send bookings directly.</div>}
+              <p className="mt-3 text-xs leading-5 text-slate-500">Preparing this request does not send it to the business.</p>
+              {submitted && <div className="mt-4 rounded-xl border border-blue-200 bg-blue-50 p-4 text-sm text-blue-950" role="status"><strong className="block text-base">Your request is ready</strong><p className="mt-1">Copy the message below and send it through a verified AR Cooling Solutions contact channel.</p><textarea id="request-text" readOnly value={request} rows="9" aria-label="Prepared service request" className="mt-3 w-full rounded-lg border border-blue-200 bg-white p-3 text-sm leading-6" /><button type="button" onClick={copyRequest} className="mt-2 rounded-lg bg-blue-800 px-4 py-2 font-bold text-white hover:bg-blue-950">{copied ? 'Copied!' : 'Copy request'}</button></div>}
             </form>
           </div>
         </section>
@@ -286,8 +312,8 @@ function App() {
         </div>
       </footer>
 
-      <button onClick={openWhatsApp} className="fixed bottom-5 right-5 z-[70] flex h-16 w-16 items-center justify-center rounded-full bg-[#25D366] text-white shadow-2xl shadow-emerald-300 transition hover:-translate-y-1 hover:scale-105 sm:h-auto sm:w-auto sm:gap-2 sm:px-5 sm:py-4" aria-label="WhatsApp AR Cooling Solutions" title="WhatsApp AR Cooling Solutions">
-        <MessageCircle size={28} fill="currentColor" /><span className="hidden font-extrabold sm:inline">WhatsApp</span>
+      <button onClick={openWhatsApp} className="fixed bottom-5 right-5 z-[70] flex h-16 w-16 items-center justify-center rounded-full bg-blue-700 text-white shadow-2xl shadow-blue-300 transition hover:-translate-y-1 hover:scale-105 sm:h-auto sm:w-auto sm:gap-2 sm:px-5 sm:py-4" aria-label="Go to service request" title="Go to service request">
+        <MessageCircle size={28} /><span className="hidden font-extrabold sm:inline">Request service</span>
       </button>
     </div>
   )
