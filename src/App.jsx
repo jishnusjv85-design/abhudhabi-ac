@@ -22,12 +22,12 @@ import {
 } from 'lucide-react'
 
 const services = [
-  { icon: Sparkles, title: 'AC Deep Cleaning', text: 'Indoor unit, filters, coil area, drain path and accessible dust build-up cleaned for fresher airflow.' },
-  { icon: Wrench, title: 'AC Service & Repair', text: 'Troubleshooting for low cooling, water leakage, unusual noise, electrical faults and common AC issues.' },
-  { icon: Fan, title: 'Cooling Performance Check', text: 'Airflow and cooling checks to identify performance problems before recommending repair work.' },
-  { icon: Gauge, title: 'Gas / Refrigerant Check', text: 'Cooling and pressure checks where required, including basic leak-related inspection before refill advice.' },
-  { icon: Wind, title: 'Installation & Re-installation', text: 'Support for AC installation, shifting, removal and re-installation for homes, shops and offices.' },
-  { icon: ShieldCheck, title: 'Periodic Maintenance', text: 'Regular AC maintenance for homes and commercial spaces to keep units clean and dependable.' },
+  { icon: Sparkles, title: 'AC Deep Cleaning', text: 'Indoor unit, filters, coil area, drain path and accessible dust build-up cleaned for fresher airflow.', image: '/images/service-cleaning.webp' },
+  { icon: Wrench, title: 'AC Service & Repair', text: 'Troubleshooting for low cooling, water leakage, unusual noise, electrical faults and common AC issues.', image: '/images/service-repair.webp' },
+  { icon: Fan, title: 'Cooling Performance Check', text: 'Airflow and cooling checks to identify performance problems before recommending repair work.', image: '/images/service-maintenance.webp' },
+  { icon: Gauge, title: 'Gas / Refrigerant Check', text: 'Cooling and pressure checks where required, including basic leak-related inspection before refill advice.', image: '/images/service-repair.webp' },
+  { icon: Wind, title: 'Installation & Re-installation', text: 'Support for AC installation, shifting, removal and re-installation for homes, shops and offices.', image: '/images/service-installation.webp' },
+  { icon: ShieldCheck, title: 'Periodic Maintenance', text: 'Regular AC maintenance for homes and commercial spaces to keep units clean and dependable.', image: '/images/service-maintenance.webp' },
 ]
 
 const acTypes = [
@@ -197,21 +197,9 @@ function App() {
               </div>
             </div>
 
-            <div className="hero-art relative min-h-[500px] overflow-hidden rounded-[2.3rem] border border-blue-100 bg-gradient-to-br from-white via-sky-50 to-blue-100 p-7 shadow-2xl shadow-blue-100" role="img" aria-label="Illustration of a cooling air conditioner">
-              <div className="absolute -right-20 -top-20 h-80 w-80 rounded-full bg-gradient-to-br from-sky-300 to-blue-700" />
-              <Snowflake className="absolute right-14 top-20 text-white/90" size={34} />
-              <Snowflake className="absolute right-28 top-14 text-white/70" size={19} />
-              <div className="absolute left-7 right-7 top-36 rounded-[1.7rem] border border-blue-100 bg-white px-7 py-8 shadow-2xl shadow-blue-200/60">
-                <div className="flex items-start justify-between"><div className="text-xs font-extrabold uppercase tracking-widest text-slate-400">AR Cooling</div><div className="font-black text-sky-500">18°C</div></div>
-                <div className="mt-14 h-1.5 w-4/5 rounded-full bg-slate-200" />
-                <div className="mt-3 grid grid-cols-12 gap-1.5">{Array.from({ length: 12 }).map((_, index) => <span key={index} className="h-3 rounded bg-sky-100" />)}</div>
-              </div>
-              <div className="absolute bottom-28 left-7 right-7 rounded-2xl bg-gradient-to-r from-blue-950 to-blue-700 px-5 py-4 text-white shadow-xl">
-                <div className="text-xs text-sky-200">Kerala climate ready</div>
-                <div className="mt-1 font-extrabold">Cleaning focused for heat, humidity & monsoon conditions.</div>
-              </div>
-              <div className="absolute bottom-6 left-7 rounded-2xl border border-blue-100 bg-white px-4 py-3 shadow-lg"><strong className="block text-sm">Deep Cleaning</strong><span className="text-xs text-slate-500">Filter · coil · drain care</span></div>
-              <div className="absolute bottom-6 right-7 rounded-2xl border border-blue-100 bg-white px-4 py-3 shadow-lg"><strong className="block text-sm">All AC Models</strong><span className="text-xs text-slate-500">Home · shop · office</span></div>
+            <div className="hero-art relative min-h-[500px] overflow-hidden rounded-[2.3rem] border border-blue-100 shadow-2xl shadow-blue-100">
+              <img src="/images/hero-home.webp" alt="Comfortable home with a wall-mounted air conditioner" fetchPriority="high" width="1600" height="800" className="absolute inset-0 h-full w-full object-cover object-[65%_center]" />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-blue-950/85 to-transparent p-7 pt-28 text-white"><span className="text-xs font-bold uppercase tracking-widest text-sky-200">Comfort at home</span><strong className="mt-2 block max-w-xs text-xl font-extrabold">Cooling care for Kerala living.</strong></div>
             </div>
           </div>
         </section>
@@ -234,10 +222,11 @@ function App() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl"><div className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Our services</div><h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-slate-950 sm:text-5xl">Complete AC care, from cleaning to repair.</h2><p className="mt-4 leading-7 text-slate-600">One local service team for routine maintenance, performance issues, deep cleaning and installation-related AC work.</p></div>
             <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-              {services.map(({ icon: ServiceIcon, title, text }) => (
-                <article key={title} className="rounded-[1.6rem] border border-blue-100 bg-white p-6 shadow-lg shadow-blue-50 transition hover:-translate-y-1 hover:shadow-xl">
-                  <div className="mb-5 flex h-13 w-13 items-center justify-center rounded-2xl bg-blue-50 text-blue-700"><ServiceIcon size={23} /></div>
-                  <h3 className="text-lg font-extrabold text-blue-950">{title}</h3><p className="mt-2 text-sm leading-7 text-slate-600">{text}</p>
+              {services.map(({ icon: ServiceIcon, title, text, image }) => (
+                <article key={title} className="overflow-hidden rounded-[1.6rem] border border-blue-100 bg-white shadow-lg shadow-blue-50 transition hover:-translate-y-1 hover:shadow-xl">
+                  <img src={image} alt="" loading="lazy" width="1448" height="1086" className="aspect-[16/10] w-full object-cover" />
+                  <div className="p-6"><div className="mb-5 flex h-13 w-13 items-center justify-center rounded-2xl bg-blue-50 text-blue-700"><ServiceIcon size={23} /></div>
+                  <h3 className="text-lg font-extrabold text-blue-950">{title}</h3><p className="mt-2 text-sm leading-7 text-slate-600">{text}</p></div>
                 </article>
               ))}
             </div>
@@ -247,6 +236,7 @@ function App() {
         <section id="models" className="bg-gradient-to-b from-[#eaf8ff] to-[#f8fdff] py-20 sm:py-24">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl"><div className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">All AC models & systems</div><h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-slate-950 sm:text-5xl">All common AC types serviced and cleaned.</h2><p className="mt-4 leading-7 text-slate-600">Residential and commercial air-conditioning systems commonly used across Kerala are covered.</p></div>
+            <img src="/images/ac-systems.webp" alt="Commercial interior with cassette, ducted and split air conditioning" loading="lazy" width="1600" height="800" className="mt-10 aspect-[16/7] w-full rounded-[1.8rem] object-cover shadow-xl shadow-blue-100" />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {acTypes.slice(0, showModels ? acTypes.length : 8).map((name) => (
                 <div key={name} className="flex min-h-28 flex-col justify-between rounded-2xl border border-blue-100 bg-white p-5 shadow-sm"><Snowflake size={20} className="text-blue-600" /><strong className="mt-5 text-sm text-blue-950">{name}</strong></div>
@@ -267,6 +257,7 @@ function App() {
               <div className="text-xs font-black uppercase tracking-[0.2em] text-sky-200">Made for Kerala</div>
               <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-white">Local AC care for Kozhikode’s climate.</h2>
               <p className="mt-5 leading-7 text-blue-100">Heat, humidity and monsoon weather make regular AC cleaning especially important. AR Cooling Solutions focuses on practical service for Kerala homes and commercial spaces.</p>
+              <img src="/images/kozhikode-coverage.webp" alt="Illustrative view of a tropical Kozhikode neighborhood from a balcony" loading="lazy" width="1448" height="1086" className="mt-7 aspect-[16/10] w-full rounded-2xl object-cover" />
               <div className="mt-8 rounded-2xl border border-white/15 bg-white/10 p-5"><strong>കോഴിക്കോട് മുഴുവൻ സർവീസ്</strong><div className="mt-1 text-sm text-sky-100">Home · Apartment · Shop · Office · Commercial Space</div></div>
             </div>
             <div className="rounded-[2rem] border border-blue-100 bg-white p-8 shadow-xl shadow-blue-50">
@@ -296,6 +287,7 @@ function App() {
               <div className="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Book a service</div>
               <h2 className="mt-3 text-4xl font-black tracking-[-0.04em] text-slate-950 sm:text-5xl">Tell us what your AC needs.</h2>
               <p className="mt-5 leading-7 text-slate-600">Share the service type, AC model and your Kozhikode location. Prepare a message you can copy and send through a verified contact channel.</p>
+              <img src="/images/booking-home.webp" alt="Homeowner preparing an AC service enquiry on a phone" loading="lazy" width="960" height="1200" className="mt-7 aspect-[4/3] w-full rounded-[1.8rem] object-cover object-center shadow-lg shadow-blue-100" />
               <div className="mt-7 grid gap-3 text-sm font-bold text-slate-600">
                 <span className="flex items-center gap-2"><Home size={17} className="text-blue-600" /> Home & apartment service</span>
                 <span className="flex items-center gap-2"><Store size={17} className="text-blue-600" /> Shops & commercial spaces</span>
@@ -329,7 +321,7 @@ function App() {
             <div className="flex items-center gap-3"><div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-600 text-white"><Snowflake size={22} /></div><div><strong className="block text-white">AR Cooling Solutions</strong><span className="text-xs text-sky-200">Kozhikode · Kerala</span></div></div>
             <div className="flex flex-wrap gap-5 text-sm font-bold"><a href="#services">Services</a><a href="#models">AC Models</a><a href="#areas">Service Area</a><a href="#book">Book Service</a></div>
           </div>
-          <div className="mt-7 border-t border-white/10 pt-5 text-xs text-blue-300">© 2026 AR Cooling Solutions · AC service, repair and cleaning across Kozhikode.</div>
+          <div className="mt-7 border-t border-white/10 pt-5 text-xs text-blue-300">© 2026 AR Cooling Solutions · AC service, repair and cleaning across Kozhikode. Website images are illustrative.</div>
         </div>
       </footer>
 

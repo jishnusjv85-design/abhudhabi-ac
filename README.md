@@ -33,6 +33,10 @@ floating WhatsApp button. The current links prepare a message but cannot route
 it directly to the business without that number.
 # Launch content checklist
 
+## Website imagery
+
+The eight generated illustrative WebP images in `public/images/` cover the hero, service cards, AC systems, Kozhikode coverage and booking sections. They depict example scenes, not AR Cooling Solutions staff, customers or completed jobs. The separate “Our work” section below is reserved for genuine, approved photos. Keep the illustrative label in the footer while these images are used.
+
 ## Business WhatsApp
 
 Set `VITE_BUSINESS_WHATSAPP` in the Vercel project environment variables to the **verified business number in international format, digits only** (for example, `919876543210`). Redeploy after setting it. The floating button will then open a direct chat, and prepared service requests can open WhatsApp with the entered details. Without a verified number, the button leads to the booking form and requests remain copyable for manual sharing.
