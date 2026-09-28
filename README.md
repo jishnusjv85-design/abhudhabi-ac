@@ -35,7 +35,7 @@ it directly to the business without that number.
 
 ## Website imagery
 
-The eight generated illustrative WebP images in `public/images/` cover the hero, service cards, AC systems, Kozhikode coverage and booking sections. They depict example scenes, not AR Cooling Solutions staff, customers or completed jobs. The separate “Our work” section below is reserved for genuine, approved photos. Keep the illustrative label in the footer while these images are used.
+The ten generated illustrative WebP images in `public/images/` cover the hero, service cards, AC systems, Kozhikode coverage, service process, pricing and booking sections. They depict example scenes, not AR Cooling Solutions staff, customers or completed jobs. The separate “Our work” section below is reserved for genuine, approved photos. Keep the illustrative label in the footer while these images are used.
 
 ## Business WhatsApp
 
