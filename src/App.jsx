@@ -24,8 +24,8 @@ import {
 const services = [
   { icon: Sparkles, title: 'AC Deep Cleaning', text: 'Indoor unit, filters, coil area, drain path and accessible dust build-up cleaned for fresher airflow.', image: '/images/service-cleaning.webp' },
   { icon: Wrench, title: 'AC Service & Repair', text: 'Troubleshooting for low cooling, water leakage, unusual noise, electrical faults and common AC issues.', image: '/images/service-repair.webp' },
-  { icon: Fan, title: 'Cooling Performance Check', text: 'Airflow and cooling checks to identify performance problems before recommending repair work.', image: '/images/service-maintenance.webp' },
-  { icon: Gauge, title: 'Gas / Refrigerant Check', text: 'Cooling and pressure checks where required, including basic leak-related inspection before refill advice.', image: '/images/service-repair.webp' },
+  { icon: Fan, title: 'Cooling Performance Check', text: 'Airflow and cooling checks to identify performance problems before recommending repair work.', image: '/images/performance.webp' },
+  { icon: Gauge, title: 'Gas / Refrigerant Check', text: 'Cooling and pressure checks where required, including basic leak-related inspection before refill advice.', image: '/images/refrigerant.webp' },
   { icon: Wind, title: 'Installation & Re-installation', text: 'Support for AC installation, shifting, removal and re-installation for homes, shops and offices.', image: '/images/service-installation.webp' },
   { icon: ShieldCheck, title: 'Periodic Maintenance', text: 'Regular AC maintenance for homes and commercial spaces to keep units clean and dependable.', image: '/images/service-maintenance.webp' },
 ]
@@ -56,6 +56,14 @@ const acTypes = [
   'FCU - Fan Coil Unit',
   'AHU - Air Handling Unit',
 ]
+
+const modelImage = (name) => {
+  if (name.includes('Window')) return '/images/window.webp'
+  if (name.includes('Portable')) return '/images/portable.webp'
+  if (name.includes('Cassette')) return '/images/cassette.webp'
+  if (name.includes('Split')) return '/images/split.webp'
+  return '/images/ac-systems.webp'
+}
 
 const brands = [
   'Daikin', 'LG', 'Samsung', 'Voltas', 'Blue Star', 'Carrier', 'Hitachi',
@@ -239,7 +247,7 @@ function App() {
             <img src="/images/ac-systems.webp" alt="Commercial interior with cassette, ducted and split air conditioning" loading="lazy" width="1600" height="800" className="mt-10 aspect-[16/7] w-full rounded-[1.8rem] object-cover shadow-xl shadow-blue-100" />
             <div className="mt-10 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
               {acTypes.slice(0, showModels ? acTypes.length : 8).map((name) => (
-                <div key={name} className="flex min-h-28 flex-col justify-between rounded-2xl border border-blue-100 bg-white p-5 shadow-sm"><Snowflake size={20} className="text-blue-600" /><strong className="mt-5 text-sm text-blue-950">{name}</strong></div>
+                <div key={name} className="overflow-hidden rounded-2xl border border-blue-100 bg-white shadow-sm"><img src={modelImage(name)} alt="" loading="lazy" width="1200" height="900" className="aspect-[4/3] w-full object-cover" /><strong className="block p-5 text-sm text-blue-950">{name}</strong></div>
               ))}
             </div>
             <button type="button" className="mt-6 rounded-full border border-blue-200 bg-white px-5 py-3 text-sm font-bold text-blue-800 hover:bg-blue-50" onClick={() => setShowModels(!showModels)} aria-expanded={showModels}>{showModels ? 'Show fewer AC types' : 'View all AC types'}</button>
